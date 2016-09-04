@@ -1,2 +1,25 @@
 c:\users\zds97\onedrive\documents\visual studio 2015\Projects\LightEQ\LightEQ\bin\Debug\LightEQ.exe.config
 C:\Users\zds97\OneDrive\Documents\GitHub\LightEQ\LightEQ\bin\Debug\LightEQ.exe.config
+C:\Users\zds97\Source\Repos\LightEQ\LightEQ\bin\Debug\LightEQ.exe.config
+C:\Users\zds97\Source\Repos\LightEQ\LightEQ\obj\Debug\LightEQ.Properties.Resources.resources
+C:\Users\zds97\Source\Repos\LightEQ\LightEQ\obj\Debug\LightEQ.csproj.GenerateResource.Cache
+C:\Users\zds97\Source\Repos\LightEQ\LightEQ\bin\Debug\LightEQ.exe
+C:\Users\zds97\Source\Repos\LightEQ\LightEQ\bin\Debug\LightEQ.pdb
+C:\Users\zds97\Source\Repos\LightEQ\LightEQ\bin\Debug\CSCore.dll
+C:\Users\zds97\Source\Repos\LightEQ\LightEQ\bin\Debug\Newtonsoft.Json.dll
+C:\Users\zds97\Source\Repos\LightEQ\LightEQ\bin\Debug\Q42.HueApi.ColorConverters.dll
+C:\Users\zds97\Source\Repos\LightEQ\LightEQ\bin\Debug\Q42.HueApi.dll
+C:\Users\zds97\Source\Repos\LightEQ\LightEQ\bin\Debug\Q42.HueApi.NET.dll
+C:\Users\zds97\Source\Repos\LightEQ\LightEQ\bin\Debug\System.Net.Http.Extensions.dll
+C:\Users\zds97\Source\Repos\LightEQ\LightEQ\bin\Debug\System.Net.Http.Primitives.dll
+C:\Users\zds97\Source\Repos\LightEQ\LightEQ\bin\Debug\CSCore.xml
+C:\Users\zds97\Source\Repos\LightEQ\LightEQ\bin\Debug\Newtonsoft.Json.xml
+C:\Users\zds97\Source\Repos\LightEQ\LightEQ\bin\Debug\Q42.HueApi.xml
+C:\Users\zds97\Source\Repos\LightEQ\LightEQ\bin\Debug\Q42.HueApi.ColorConverters.xml
+C:\Users\zds97\Source\Repos\LightEQ\LightEQ\bin\Debug\Q42.HueApi.NET.xml
+C:\Users\zds97\Source\Repos\LightEQ\LightEQ\bin\Debug\System.Net.Http.Extensions.xml
+C:\Users\zds97\Source\Repos\LightEQ\LightEQ\bin\Debug\System.Net.Http.Primitives.xml
+C:\Users\zds97\Source\Repos\LightEQ\LightEQ\obj\Debug\LightEQ.exe
+C:\Users\zds97\Source\Repos\LightEQ\LightEQ\obj\Debug\LightEQ.pdb
+C:\Users\zds97\Source\Repos\LightEQ\LightEQ\bin\Debug\LightEQ_ico.ico
+C:\Users\zds97\Source\Repos\LightEQ\LightEQ\obj\Debug\LightEQ.Form1.resources
