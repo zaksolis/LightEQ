@@ -7,6 +7,7 @@ using Q42.HueApi;
 using Q42.HueApi.Interfaces;
 using System.Threading.Tasks;
 using Q42.HueApi.NET;
+using Q42.HueApi.ColorConverters;
 
 namespace LightEQ
 {
@@ -16,7 +17,11 @@ namespace LightEQ
         private NotifyIcon TrayIcon;
         private ContextMenuStrip TrayIconContextMenu;
         private ToolStripMenuItem CloseMenuItem;
+        private ToolStripMenuItem LightsOnMenuItem;
         private IHueClient _client;
+
+        //vars
+        public string HueKey = ConfigurationManager.AppSettings["key"].ToString();
 
         public MyApplicationContext()
         {
@@ -48,15 +53,17 @@ namespace LightEQ
             //Optional - Add a context menu to the TrayIcon:
             TrayIconContextMenu = new ContextMenuStrip();
             CloseMenuItem = new ToolStripMenuItem();
+            LightsOnMenuItem = new ToolStripMenuItem();
             TrayIconContextMenu.SuspendLayout();
 
             // 
             // TrayIconContextMenu
             // 
             this.TrayIconContextMenu.Items.AddRange(new ToolStripItem[] {
-            this.CloseMenuItem});
+            this.CloseMenuItem, this.LightsOnMenuItem});
             this.TrayIconContextMenu.Name = "TrayIconContextMenu";
             this.TrayIconContextMenu.Size = new Size(153, 70);
+
             // 
             // CloseMenuItem
             // 
@@ -64,6 +71,14 @@ namespace LightEQ
             this.CloseMenuItem.Size = new Size(152, 22);
             this.CloseMenuItem.Text = "Exit";
             this.CloseMenuItem.Click += new EventHandler(this.CloseMenuItem_Click);
+
+            // 
+            // LightsOnMenuItem
+            // 
+            this.LightsOnMenuItem.Name = "LightsOnMenuItem";
+            this.LightsOnMenuItem.Size = new Size(152, 22);
+            this.LightsOnMenuItem.Text = "Lights on";
+            this.LightsOnMenuItem.Click += new EventHandler(this.LightsOnMenuItem_Click);
 
             TrayIconContextMenu.ResumeLayout(false);
             TrayIcon.ContextMenuStrip = TrayIconContextMenu;
@@ -74,10 +89,15 @@ namespace LightEQ
         {
             string ip = ConfigurationManager.AppSettings["ip"].ToString();
             string key = ConfigurationManager.AppSettings["key"].ToString();
+            HueKey = key;
 
             if (ip.Length == 0 || key.Length == 0)
             {
                 await GetConfig();
+            }
+            while(key.Length == 0)
+            {
+                //do nothing
             }
             _client = new LocalHueClient(ip, key);
         }
@@ -96,6 +116,7 @@ namespace LightEQ
                     ILocalHueClient client = new LocalHueClient(result);
                     var appKey = await client.RegisterAsync("LightEQ", System.Net.Dns.GetHostName());
                     SetConfig("key", appKey);
+                    HueKey = appKey;
                 }
                 catch
                 {
@@ -103,6 +124,7 @@ namespace LightEQ
                     ILocalHueClient client = new LocalHueClient(result);
                     var appKey = await client.RegisterAsync("LightEQ", System.Net.Dns.GetHostName());
                     SetConfig("key", appKey);
+                    HueKey = appKey;
                 }
 
 
@@ -181,5 +203,13 @@ namespace LightEQ
                 Application.Exit();
             }
         }
+
+        private void LightsOnMenuItem_Click(object sender, EventArgs e)
+        {
+            var command = new LightCommand();
+            command.On = true;
+            _client.SendCommandAsync(command);
+        }
+
     }
 }

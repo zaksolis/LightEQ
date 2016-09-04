@@ -20,5 +20,6 @@ namespace LightEQ
             Application.Run(new MyApplicationContext());
 
         }
+
     }
 }
