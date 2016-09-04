@@ -23,3 +23,4 @@ C:\Users\zds97\Source\Repos\LightEQ\LightEQ\obj\Debug\LightEQ.exe
 C:\Users\zds97\Source\Repos\LightEQ\LightEQ\obj\Debug\LightEQ.pdb
 C:\Users\zds97\Source\Repos\LightEQ\LightEQ\bin\Debug\LightEQ_ico.ico
 C:\Users\zds97\Source\Repos\LightEQ\LightEQ\obj\Debug\LightEQ.Form1.resources
+C:\Users\zds97\Source\Repos\LightEQ\LightEQ\obj\Debug\LightEQ.csprojResolveAssemblyReference.cache

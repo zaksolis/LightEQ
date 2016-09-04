@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Q42.HueApi;
 
 namespace LightEQ
 {
@@ -17,6 +18,7 @@ namespace LightEQ
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MyApplicationContext());
+
         }
     }
 }

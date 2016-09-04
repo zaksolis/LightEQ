@@ -1,6 +1,12 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Configuration;
+using System.Collections.Generic;
+using Q42.HueApi;
+using Q42.HueApi.Interfaces;
+using System.Threading.Tasks;
+using Q42.HueApi.NET;
 
 namespace LightEQ
 {
@@ -10,22 +16,24 @@ namespace LightEQ
         private NotifyIcon TrayIcon;
         private ContextMenuStrip TrayIconContextMenu;
         private ToolStripMenuItem CloseMenuItem;
+        private IHueClient _client;
 
         public MyApplicationContext()
         {
             Application.ApplicationExit += new EventHandler(this.OnApplicationExit);
             InitializeComponent();
             TrayIcon.Visible = true;
+            InitializeHue();
         }
 
         private void InitializeComponent()
         {
             TrayIcon = new NotifyIcon();
 
-            TrayIcon.BalloonTipIcon = ToolTipIcon.Info;
-            TrayIcon.BalloonTipText =
-              "I noticed that you double-clicked me! What can I do for you?";
-            TrayIcon.BalloonTipTitle = "You called Master?";
+            //TrayIcon.BalloonTipIcon = ToolTipIcon.Info;
+            //TrayIcon.BalloonTipText =
+            //  "I noticed that you double-clicked me! What can I do for you?";
+            //TrayIcon.BalloonTipTitle = "You called Master?";
             TrayIcon.Text = "LightEQ";
 
 
@@ -61,10 +69,82 @@ namespace LightEQ
             TrayIcon.ContextMenuStrip = TrayIconContextMenu;
         }
 
+        //hue connection
+        public async void InitializeHue()
+        {
+            string ip = ConfigurationManager.AppSettings["ip"].ToString();
+            string key = ConfigurationManager.AppSettings["key"].ToString();
+
+            if (ip.Length == 0 || key.Length == 0)
+            {
+                await GetConfig();
+            }
+            _client = new LocalHueClient(ip, key);
+        }
+
+        public async Task GetConfig()
+        {
+            var result = await FindBridge();
+
+            SetConfig("ip", result);
+            
+            //user not set up
+            if (ConfigurationManager.AppSettings["key"].Length == 0)
+            {
+                try
+                {
+                    ILocalHueClient client = new LocalHueClient(result);
+                    var appKey = await client.RegisterAsync("LightEQ", System.Net.Dns.GetHostName());
+                    SetConfig("key", appKey);
+                }
+                catch
+                {
+                    MessageBox.Show("Press thue Hue Bridge push-link button.");
+                    ILocalHueClient client = new LocalHueClient(result);
+                    var appKey = await client.RegisterAsync("LightEQ", System.Net.Dns.GetHostName());
+                    SetConfig("key", appKey);
+                }
+
+
+                //Save the app key for later use
+            }
+        }
+
+        async Task<string> FindBridge()
+        {
+            IBridgeLocator locator = new HttpBridgeLocator();
+
+            //For Windows 8 and .NET45 projects you can use the SSDPBridgeLocator which actually scans your network. 
+            //See the included BridgeDiscoveryTests and the specific .NET and .WinRT projects
+            IEnumerable<string> bridgeIPs = await locator.LocateBridgesAsync(TimeSpan.FromSeconds(5));
+            //foreach (var bridgeIp in bridgeIPs)
+            //{
+            //    MessageBox.Show(bridgeIp);
+            //}
+            if (bridgeIPs != null)
+            {
+                foreach (string ip in bridgeIPs)
+                {
+                    return ip;
+                }
+            }
+            return "none";
+        }
+
         private void OnApplicationExit(object sender, EventArgs e)
         {
             //Cleanup so that the icon will be removed when the application is closed
             TrayIcon.Visible = false;
+        }
+
+        public void SetConfig(string key, string value)
+        {
+            Configuration config = ConfigurationManager.OpenExeConfiguration(Application.ExecutablePath);
+
+            config.AppSettings.Settings.Remove(key);
+            config.AppSettings.Settings.Add(key, value);
+
+            config.Save(ConfigurationSaveMode.Modified);
         }
 
         public void TrayIcon_DoubleClick(object sender, EventArgs e)
